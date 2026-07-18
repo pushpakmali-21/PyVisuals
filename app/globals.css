@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --background: #0c1017;
+  --foreground: #edf2f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.monaco-editor,
+.monaco-editor-background,
+.monaco-editor .margin {
+  background-color: #10151d !important;
+}
+
+.terminal-scrollbar::-webkit-scrollbar,
+.table-scrollbar::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb,
+.table-scrollbar::-webkit-scrollbar-thumb {
+  background: #435066;
+  border-radius: 999px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-track,
+.table-scrollbar::-webkit-scrollbar-track {
+  background: #161c27;
+}
