@@ -1,5 +1,5 @@
-import { PyVisualsIde } from "@/components/PyVisualsIde";
+import { HomePage } from "@/components/home/HomePage";
 
 export default function Home() {
-  return <PyVisualsIde />;
+  return <HomePage />;
 }
