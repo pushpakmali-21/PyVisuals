@@ -20,7 +20,7 @@ export function TerminalPanel({ lines, running }: TerminalPanelProps) {
       <div className="flex h-11 shrink-0 items-center justify-between border-b border-line px-4">
         <div>
           <h2 className="text-sm font-semibold text-slate-100">Terminal / Output</h2>
-          <p className="text-xs text-slate-400">Explicit Run output only</p>
+          <p className="text-xs text-slate-400">Standard output and errors</p>
         </div>
         <span className="text-xs text-slate-400">{running ? "running..." : "idle"}</span>
       </div>

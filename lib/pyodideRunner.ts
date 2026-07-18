@@ -534,7 +534,8 @@ def _execute_user_code():
     if final_expression is not None:
         value = eval(compile(final_expression, "<pyvisuals>", "eval"), user_globals, user_globals)
         _add_capture(value, final_expression_title or "last expression")
-    elif not _captures and assigned_titles:
+    
+    if not _captures and assigned_titles:
         for name, title in assigned_titles:
             if name in user_globals:
                 _add_capture(user_globals[name], title)
@@ -546,15 +547,13 @@ def _run():
     original_stderr = sys.stderr
 
     try:
-        if _mode == "run":
-            sys.stdout = _CaptureStream("stdout")
-            sys.stderr = _CaptureStream("stderr")
+        sys.stdout = _CaptureStream("stdout")
+        sys.stderr = _CaptureStream("stderr")
         _execute_user_code()
     except Exception:
         ok = False
         error = traceback.format_exc()
-        if _mode == "run":
-            traceback.print_exc()
+        traceback.print_exc()
     finally:
         sys.stdout = original_stdout
         sys.stderr = original_stderr

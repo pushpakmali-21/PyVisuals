@@ -81,6 +81,7 @@ export function PyVisualsIde() {
         const result = await executePython(source, "live", setStatus);
         if (requestId === liveRequestId.current) {
           setVisuals(result.visuals);
+          setTerminalLines(result.terminal);
         }
       } catch (error) {
         if (requestId === liveRequestId.current) {
@@ -135,6 +136,7 @@ export function PyVisualsIde() {
 
     try {
       const result = await executePython(code, "run", setStatus);
+      setVisuals(result.visuals);
       setTerminalLines(result.terminal.length ? result.terminal : [{ stream: "stdout", text: "Program completed with no output.\n" }]);
     } catch (error) {
       setTerminalLines([
