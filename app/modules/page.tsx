@@ -75,6 +75,18 @@ const MODULES = [
     border: "rgba(251, 146, 60, 0.1)",
     lessons: null,
     duration: null
+  },
+  {
+    id: "ml-launchpad",
+    name: "ML Launchpad",
+    description: "A 6-Day Machine Learning Bootcamp: Python, NumPy, Pandas, Data Visualisation, and Machine Learning.",
+    href: "/modules/ml-launchpad",
+    available: true,
+    color: "#ec4899",
+    bg: "rgba(236, 72, 153, 0.05)",
+    border: "rgba(236, 72, 153, 0.1)",
+    lessons: 6,
+    duration: "9 hours"
   }
 ];
 
