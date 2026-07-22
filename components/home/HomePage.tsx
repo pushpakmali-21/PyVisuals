@@ -15,6 +15,7 @@ import {
   TrendingUp,
   Zap
 } from "lucide-react";
+import { AuthNavActions } from "@/components/auth/AuthNavActions";
 
 /* ── Floating background particles ───────────────────── */
 type Particle = {
@@ -428,20 +429,21 @@ export function HomePage() {
             </div>
             <span className="font-bold text-slate-100">PyVisuals</span>
           </div>
-          <nav className="flex items-center gap-2">
+          <nav className="flex items-center gap-3">
             <Link
               href="/modules"
-              className="rounded-lg px-4 py-2 text-sm text-slate-400 transition-colors hover:text-slate-200"
+              className="hidden rounded-lg px-4 py-2 text-sm text-slate-400 transition-colors hover:text-slate-200 sm:inline-flex"
             >
               Modules
             </Link>
             <Link
               href="/compiler"
-              className="flex items-center gap-2 rounded-lg bg-accent/10 px-4 py-2 text-sm font-semibold text-accent hover:bg-accent/20 transition-colors"
+              className="hidden items-center gap-2 rounded-lg bg-accent/10 px-4 py-2 text-sm font-semibold text-accent hover:bg-accent/20 transition-colors sm:flex"
             >
               <Code2 size={14} />
               Compiler
             </Link>
+            <AuthNavActions />
           </nav>
         </div>
       </header>

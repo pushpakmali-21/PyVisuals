@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpen, Clock, Lock } from "lucide-react";
+import { AuthNavActions } from "@/components/auth/AuthNavActions";
 
 const MODULES = [
   {
@@ -107,12 +108,15 @@ export default function ModulesPage() {
             <span className="text-slate-600">/</span>
             <span className="text-sm font-medium text-slate-300">Modules</span>
           </div>
-          <Link
-            href="/compiler"
-            className="flex h-8 items-center gap-2 rounded-md border border-line bg-panelSoft px-3 text-sm text-slate-400 hover:border-accent hover:text-accent transition-colors"
-          >
-            Open Compiler →
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/compiler"
+              className="hidden h-8 items-center gap-2 rounded-md border border-line bg-panelSoft px-3 text-sm text-slate-400 hover:border-accent hover:text-accent transition-colors sm:flex"
+            >
+              Open Compiler →
+            </Link>
+            <AuthNavActions />
+          </div>
         </div>
       </header>
 

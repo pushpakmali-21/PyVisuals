@@ -1,15 +1,19 @@
 "use client";
 
-import { BookOpen, ChevronRight, Clock } from "lucide-react";
+import { BookOpen, ChevronRight, Clock, CheckCheck } from "lucide-react";
 import type { LessonGroup, Lesson } from "@/lib/modules/numpy";
 
 type Props = {
   groups: LessonGroup[];
   activeId: string;
   onSelect: (id: string) => void;
+  completedIds?: Set<string>;
 };
 
-export function LearningSidebar({ groups, activeId, onSelect }: Props) {
+export function LearningSidebar({ groups, activeId, onSelect, completedIds }: Props) {
+  const totalLessons = groups.flatMap((g) => g.lessons).length;
+  const completedCount = completedIds ? completedIds.size : 0;
+
   return (
     <nav className="sidebar-scrollbar flex h-full flex-col overflow-y-auto bg-[#0f1623] border-r border-line">
       {/* Sidebar header */}
@@ -17,11 +21,31 @@ export function LearningSidebar({ groups, activeId, onSelect }: Props) {
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
           <BookOpen size={16} />
         </div>
-        <div>
+        <div className="flex-1 min-w-0">
           <div className="text-sm font-semibold text-slate-100">NumPy</div>
           <div className="text-xs text-slate-500">Learning Module</div>
         </div>
       </div>
+
+      {/* Progress bar (only when there's progress) */}
+      {completedIds && completedCount > 0 && (
+        <div className="border-b border-line px-4 py-3">
+          <div className="mb-1.5 flex items-center justify-between">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-600">
+              Progress
+            </span>
+            <span className="text-[10px] text-slate-500">
+              {completedCount}/{totalLessons}
+            </span>
+          </div>
+          <div className="h-1 overflow-hidden rounded-full bg-line">
+            <div
+              className="h-full rounded-full bg-accent transition-all duration-700"
+              style={{ width: `${(completedCount / totalLessons) * 100}%` }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Lesson groups */}
       <div className="flex-1 py-2">
@@ -31,6 +55,7 @@ export function LearningSidebar({ groups, activeId, onSelect }: Props) {
             group={group}
             activeId={activeId}
             onSelect={onSelect}
+            completedIds={completedIds}
           />
         ))}
       </div>
@@ -46,11 +71,13 @@ export function LearningSidebar({ groups, activeId, onSelect }: Props) {
 function LessonGroup({
   group,
   activeId,
-  onSelect
+  onSelect,
+  completedIds,
 }: {
   group: LessonGroup;
   activeId: string;
   onSelect: (id: string) => void;
+  completedIds?: Set<string>;
 }) {
   const isGroupActive = group.lessons.some((l) => l.id === activeId);
 
@@ -73,6 +100,7 @@ function LessonGroup({
           lesson={lesson}
           active={lesson.id === activeId}
           onSelect={onSelect}
+          completed={completedIds?.has(lesson.id) ?? false}
         />
       ))}
     </div>
@@ -82,11 +110,13 @@ function LessonGroup({
 function LessonItem({
   lesson,
   active,
-  onSelect
+  onSelect,
+  completed,
 }: {
   lesson: Lesson;
   active: boolean;
   onSelect: (id: string) => void;
+  completed?: boolean;
 }) {
   return (
     <button
@@ -111,6 +141,9 @@ function LessonItem({
           {lesson.duration}
         </div>
       </div>
+      {completed && !active && (
+        <CheckCheck size={12} className="shrink-0 text-accent/60" />
+      )}
       {active && (
         <div className="ml-auto h-4 w-0.5 rounded-full bg-accent" />
       )}

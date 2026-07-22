@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AlertCircle, CheckCircle2, HelpCircle, Lightbulb, Terminal } from "lucide-react";
+import { AlertCircle, CheckCircle2, HelpCircle, Lightbulb, Terminal, CheckCheck } from "lucide-react";
 import type { ContentBlock, Lesson } from "@/lib/modules/numpy";
 import { CodeSandbox } from "./CodeSandbox";
 
@@ -10,9 +10,24 @@ type Props = {
   prev: Lesson | null;
   next: Lesson | null;
   onNavigate: (id: string) => void;
+  // Auth-aware progress props (optional, ignored when user not logged in)
+  onMarkComplete?: (lessonId: string) => void;
+  isCompleted?: boolean;
+  isLoggedIn?: boolean;
 };
 
-export function LessonContent({ lesson, prev, next, onNavigate }: Props) {
+export function LessonContent({ lesson, prev, next, onNavigate, onMarkComplete, isCompleted, isLoggedIn }: Props) {
+  const [markedNow, setMarkedNow] = useState(false);
+
+  function handleMarkComplete() {
+    if (onMarkComplete) {
+      onMarkComplete(lesson.id);
+      setMarkedNow(true);
+    }
+  }
+
+  const completed = isCompleted || markedNow;
+
   return (
     <div className="lesson-scrollbar flex h-full flex-col overflow-y-auto">
       {/* Lesson header */}
@@ -20,7 +35,26 @@ export function LessonContent({ lesson, prev, next, onNavigate }: Props) {
         <div className="text-xs font-semibold uppercase tracking-widest text-accent mb-1">
           NumPy Module
         </div>
-        <h1 className="text-2xl font-bold text-slate-100">{lesson.title}</h1>
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="text-2xl font-bold text-slate-100">{lesson.title}</h1>
+          {isLoggedIn && (
+            completed ? (
+              <div className="flex shrink-0 items-center gap-1.5 rounded-full bg-accent/15 px-3 py-1.5 text-xs font-semibold text-accent">
+                <CheckCheck size={13} />
+                Completed
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={handleMarkComplete}
+                className="flex shrink-0 items-center gap-1.5 rounded-full border border-line bg-panelSoft px-3 py-1.5 text-xs font-medium text-slate-400 transition-colors hover:border-accent/40 hover:text-accent"
+              >
+                <CheckCheck size={13} />
+                Mark complete
+              </button>
+            )
+          )}
+        </div>
       </div>
 
       {/* Content blocks */}
